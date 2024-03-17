@@ -1,13 +1,18 @@
 export interface ProjectItem {
-    id: number;
-    name: string;
-    country: string;
-    image: string;
-    price_per_ton: number;
-    offered_volume_in_tons: number;
-    distribution_weight: number;
-    supplier_name: string;
-    earliest_delivery: string;
-    sdgs: number[];
-    description: string;
-  }
+  id: number;
+  name: string;
+  country: string;
+  image: string;
+  price_per_ton: number;
+  offered_volume_in_tons: number;
+  distribution_weight: number;
+  supplier_name: string;
+  earliest_delivery: string;
+  sdgs: number[];
+  description: string;
+}
+
+export interface CartItem {
+  projectId: number;
+  volume: number;
+}

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { projectStyles } from '../../styles';
 import cartIcon from '../../resources/icons/cart.png';
 import cartFilledIcon from '../../resources/icons/cartFilled.png';
-import { ProjectItem } from '../../types';
+import { ProjectItem, CartItem } from '../../types';
 import { PROJECT_INFO } from '../../utlis/Constants';
+import { getCartItems, addToCart, removeFromCart } from '../../utlis/Cart';
 import Image from 'next/image';
 
 type ProjectCardProps = {
@@ -12,6 +13,33 @@ type ProjectCardProps = {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const [volume, setVolume] = useState<number>();
+
+    const handleAddToCart = (projectId: number, volume: number) => {
+        addToCart({ projectId, volume });
+        setVolume(volume)
+    };
+
+    const onPressIcon = async () => {
+        if (!isSubscribed) {
+            handleAddToCart(item?.id, volume ? volume : 1)
+            setIsSubscribed(true);
+        } else {
+            removeFromCart(item?.id);
+            setIsSubscribed(false);
+        }
+    };
+
+    useEffect(() => {
+        const storedItems = getCartItems();
+        const isAlreadySubscribed = storedItems?.find(
+            (element: CartItem) => element?.projectId === item?.id,
+        );
+        if (isAlreadySubscribed) {
+            setIsSubscribed(true);
+            setVolume(isAlreadySubscribed?.volume)
+        }
+    }, []);
 
     return (
         <div key={item.id} className={projectStyles.container}>
@@ -20,7 +48,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
             </div>
             <div className={projectStyles.content}>
                 <h2>{item?.country}</h2>
-                <div className={projectStyles.iconContainer}>
+                <div onClick={onPressIcon} className={projectStyles.iconContainer}>
                     <Image src={isSubscribed ? cartFilledIcon : cartIcon} alt="cartIcon"
                         width={30}
                         height={30}
@@ -39,8 +67,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
                         className={projectStyles.volume}
                         type="number"
                         name="volume"
+                        value={volume}
                         min="0"
-                        onChange={(e) => null}
+                        onChange={(e) => setVolume(Number(e.target.value))}
                     />
                 </p>
                 <p>{`${PROJECT_INFO.volumeInTons}: ${item?.offered_volume_in_tons}`}</p>
