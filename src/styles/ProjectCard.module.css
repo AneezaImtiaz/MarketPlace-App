@@ -1,0 +1,67 @@
+.container {
+    background-color: #bec6d4;
+    align-self: center;
+    border-radius: 8px;
+    margin-inline: 20rem;
+    padding: 3rem;
+    margin-block: 40px;
+    text-align: left;
+}
+
+.imageContainer {
+    width: '100%';
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    flex-direction: row;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.content h2 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.container p {
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.iconContainer {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #a0c9d7;
+}
+
+.icon {
+    width: 35px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.volume {
+    width: 40%;
+    margin-left: 8px;
+    padding-left: 8px;
+    border-radius: 4px;
+}
