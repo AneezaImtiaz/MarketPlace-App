@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ProjectItem } from '../types';
 import { getProjects } from '../services/projectService';
-import { ProjectCard, VirtualizedList } from '../components';
+import { ProjectCard, VirtualizedList, Search } from '../components';
+import { SEARCH } from '../utils/Constants';
 
 type MarketplaceProps = {};
 
@@ -19,13 +20,28 @@ const Marketplace: React.FC<MarketplaceProps> = () => {
     fetchProjects();
   }, []);
 
+  const searchItem = (searchValue: string) => {
+    setProjects(projects.filter((project) =>
+      project.country.toLowerCase().includes(searchValue.toLowerCase())))
+  };
+
   const renderItem = (project: any) => {
     return (<ProjectCard item={project} />);
   };
 
   return (
-    <div style={{ flex: '1 1 auto', height: '100vh' }}>
-      <VirtualizedList items={projects} renderItem={(project) => renderItem(project)} />
+    <div>
+      <div style={{
+        margin: '30px',
+        display: 'flex',
+        justifyContent: 'center'
+      }
+      }>
+        <Search buttonClick={(searchValue) => searchItem(searchValue)} placeholder={`${SEARCH} country here...`} />
+      </div>
+      <div style={{ flex: '1 1 auto', height: '100vh', alignItems: 'center' }}>
+        <VirtualizedList items={projects} renderItem={(project) => renderItem(project)} />
+      </div>
     </div>
   );
 

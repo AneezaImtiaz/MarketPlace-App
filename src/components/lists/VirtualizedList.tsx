@@ -18,8 +18,9 @@ const VirtualizedList: React.FC<VirtualizedListProps> = ({ items, renderItem }) 
         <List
           width={width}
           height={height}
+          overscanRowCount={0}
           rowCount={items?.length}
-          rowHeight={items?.length * 90} // Adjust based on the size of your rows
+          rowHeight={height}
           rowRenderer={rowRenderer}
         />
       )}

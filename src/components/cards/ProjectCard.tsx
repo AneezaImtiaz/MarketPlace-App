@@ -3,8 +3,8 @@ import { projectStyles } from '../../styles';
 import cartIcon from '../../resources/icons/cart.png';
 import cartFilledIcon from '../../resources/icons/cartFilled.png';
 import { ProjectItem, CartItem } from '../../types';
-import { PROJECT_INFO } from '../../utlis/Constants';
-import { getCartItems, addToCart, removeFromCart } from '../../utlis/Cart';
+import { PROJECT_INFO } from '../../utils/Constants';
+import { getCartItems, addToCart, removeFromCart } from '../../utils/Cart';
 import Image from 'next/image';
 
 type ProjectCardProps = {

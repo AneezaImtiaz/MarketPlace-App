@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ROUTES } from '../../utlis/Constants';
+import { ROUTES } from '../../utils/Constants';
 import { headerStyles } from '../../styles';
 
 const Header: React.FC = () => {
