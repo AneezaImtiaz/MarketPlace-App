@@ -16,6 +16,13 @@ export const NO_DATA_MODAL = {
   description: 'Like a program you see? Add them here to your cart.',
 } as const;
 
+export const ERROR_DIALOG = {
+  title: 'No Connection',
+  description: 'Something went wrong. Please try again shortly.',
+} as const;
+
+export const TRY_AGAIN = 'Try Again' as const;
+export const CLOSE = 'Close' as const;
 export const SEARCH = 'Search' as const;
 
 export const ROUTES = {
