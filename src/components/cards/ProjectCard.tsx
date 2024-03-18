@@ -19,9 +19,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item, cartIconClick = () => n
 
     const handleAddToCart = (volume: number) => {
         const storedItems = getCartItems();
-        if(storedItems?.find((element => element.projectId === item?.id))) {
-        removeFromCart(item?.id);
-        addToCart({ projectId: item?.id, volume });
+        if (storedItems?.find((element => element.projectId === item?.id))) {
+            removeFromCart(item?.id);
+            addToCart({ projectId: item?.id, volume });
         }
         setVolume(volume);
     };
@@ -56,7 +56,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item, cartIconClick = () => n
             </div>
             <div className={projectStyles.content}>
                 <h2>{item?.country}</h2>
-                <div onClick={onPressIcon} className={projectStyles.iconContainer}>
+                <div onClick={onPressIcon} data-testid="cartIcon" className={projectStyles.iconContainer}>
                     <Image src={isSelected ? cartFilledIcon : cartIcon} alt="cartIcon"
                         width={30}
                         height={30}

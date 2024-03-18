@@ -33,3 +33,14 @@ To start, run the following script from the _root_ of your project:
 ```bash
 npm run dev
 ```
+
+# Testing
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+To start, run the following script from the _root_ of your project:
+
+```bash
+npm run test
+```
