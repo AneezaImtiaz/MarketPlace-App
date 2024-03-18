@@ -10,6 +10,9 @@ const Header: React.FC = () => {
         <Link href="/" passHref>
           <span className={headerStyles.link}>{ROUTES.marketPlace}</span>
         </Link>
+        <Link href="/cart" passHref>
+          <span className={headerStyles.link}>{ROUTES.cart}</span>
+        </Link>
       </nav>
     </header>
   );

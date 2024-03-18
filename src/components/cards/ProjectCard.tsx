@@ -4,40 +4,48 @@ import cartIcon from '../../resources/icons/cart.png';
 import cartFilledIcon from '../../resources/icons/cartFilled.png';
 import { ProjectItem, CartItem } from '../../types';
 import { PROJECT_INFO } from '../../utils/Constants';
-import { getCartItems, addToCart, removeFromCart } from '../../utils/Cart';
+import { getCartItems, addToCart, removeFromCart } from '../../utils/CartUtils';
 import Image from 'next/image';
 
 type ProjectCardProps = {
     item: ProjectItem;
+    cartIconClick?: void | ((projectId: number) => void);
 };
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
-    const [isSubscribed, setIsSubscribed] = useState(false);
-    const [volume, setVolume] = useState<number>();
+const ProjectCard: React.FC<ProjectCardProps> = ({ item, cartIconClick = () => null }) => {
+    const [isSelected, setIsSelected] = useState(false);
+    const [cart, setCart] = useState<CartItem[]>([]);
+    const [volume, setVolume] = useState<number>(1);
 
-    const handleAddToCart = (projectId: number, volume: number) => {
-        addToCart({ projectId, volume });
-        setVolume(volume)
+    const handleAddToCart = (volume: number) => {
+        const storedItems = getCartItems();
+        if(storedItems?.find((element => element.projectId === item?.id))) {
+        removeFromCart(item?.id);
+        addToCart({ projectId: item?.id, volume });
+        }
+        setVolume(volume);
     };
 
     const onPressIcon = async () => {
-        if (!isSubscribed) {
-            handleAddToCart(item?.id, volume ? volume : 1)
-            setIsSubscribed(true);
+        if (!isSelected) {
+            addToCart({ projectId: item?.id, volume });
+            setIsSelected(true);
         } else {
             removeFromCart(item?.id);
-            setIsSubscribed(false);
+            cartIconClick(item?.id);
+            setIsSelected(false);
         }
     };
 
     useEffect(() => {
         const storedItems = getCartItems();
-        const isAlreadySubscribed = storedItems?.find(
+        setCart(storedItems);
+        const isAlreadySelected = storedItems?.find(
             (element: CartItem) => element?.projectId === item?.id,
         );
-        if (isAlreadySubscribed) {
-            setIsSubscribed(true);
-            setVolume(isAlreadySubscribed?.volume)
+        if (isAlreadySelected) {
+            setIsSelected(true);
+            setVolume(isAlreadySelected?.volume)
         }
     }, []);
 
@@ -49,7 +57,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
             <div className={projectStyles.content}>
                 <h2>{item?.country}</h2>
                 <div onClick={onPressIcon} className={projectStyles.iconContainer}>
-                    <Image src={isSubscribed ? cartFilledIcon : cartIcon} alt="cartIcon"
+                    <Image src={isSelected ? cartFilledIcon : cartIcon} alt="cartIcon"
                         width={30}
                         height={30}
                         className={projectStyles.icon} />
@@ -69,7 +77,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ item }) => {
                         name="volume"
                         value={volume}
                         min="0"
-                        onChange={(e) => setVolume(Number(e.target.value))}
+                        onChange={(e) => handleAddToCart(Number(e.target.value))}
                     />
                 </p>
                 <p>{`${PROJECT_INFO.volumeInTons}: ${item?.offered_volume_in_tons}`}</p>
