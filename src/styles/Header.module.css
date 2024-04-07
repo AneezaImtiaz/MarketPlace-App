@@ -1,0 +1,17 @@
+.header {
+  background-color: #333;
+  padding: 1rem;
+  text-align: center;
+}
+
+.link {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.link:hover {
+  color: rgb(145, 234, 246); /* Change color on hover */
+  cursor: pointer; /* Change cursor to indicate a link */
+}
